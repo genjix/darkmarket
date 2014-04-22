@@ -1,4 +1,4 @@
-DarkMarket
+*DarkMarket
 =======
 
 DarkMarket is a safe untouchable marketplace for the planet Earth.
