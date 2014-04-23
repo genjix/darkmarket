@@ -26,6 +26,7 @@ angular.module('app').directive('identicon', function () {
     }
   });
 
+
 angular.module('app').controller('Market', ['$scope', function($scope) {
 
   $scope.page = false
@@ -54,32 +55,39 @@ angular.module('app').controller('Market', ['$scope', function($scope) {
 
  // Open the websocket connection and handle messages
   var socket = new Connection(function(msg) {
-   switch(msg.type) {
-      case 'peer':
-         $scope.parse_peer(msg)
-         break;
-      case 'page':
-         $scope.parse_page(msg)
-         break;
-      case 'myself':
-         $scope.parse_myself(msg)
-         break;
-      case 'shout':
-         $scope.parse_shout(msg)
-         break;
-      case 'order':
-         $scope.parse_order(msg)
-         break;
-      case 'reputation':
-         $scope.parse_reputation(msg)
-         break;
-      case 'response_pubkey':
-         $scope.parse_response_pubkey(msg)
-         break;
-      default:
-         console.log("unhandled message!",msg)
-         break;
-    }
+  
+   if(msg.type !== "undefined") {
+	   switch(msg.type) {
+		  case 'peer':
+			 $scope.parse_peer(msg)
+			 break;
+		  case 'page':
+			 $scope.parse_page(msg)
+			 break;
+		  case 'myself':
+			 $scope.parse_myself(msg)
+			 break;
+		  case 'shout':
+			 $scope.parse_shout(msg)
+			 break;
+		  case 'order':
+			 $scope.parse_order(msg)
+			 break;
+		  case 'reputation':
+			 $scope.parse_reputation(msg)
+			 break;
+		  case 'response_pubkey':
+			 $scope.parse_response_pubkey(msg)
+			 break;
+		  case 'search':
+			 console.log('Search: '+msg)
+			 //$scope.parse_search(msg)
+			 break;
+		  default:
+			 console.log("unhandled message!",msg)
+			 break;
+		}
+	}
   })
 
   var add_review = function(pubkey, review) {
@@ -198,12 +206,17 @@ angular.module('app').controller('Market', ['$scope', function($scope) {
        $scope.$apply();
     }
   }
-  $scope.search = ""
+  
+  // Search for a peer on the network
+  $scope.search = "";
   $scope.searchNickname = function() {
-     var query = {'type': 'search', 'text': $scope.search };
+     var query = {
+     	'type': 'search', 
+     	'text': $scope.search 
+     };
      $scope.searching = $scope.search;
-     socket.send('search', query)
-     $scope.search = ""
+     socket.send('search', query);
+     $scope.search = "";
   }
 
   $scope.newOrder = {text:'', tx: ''}

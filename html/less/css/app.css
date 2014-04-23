@@ -28,16 +28,17 @@ h4 {
 }
 #mascot {
   width: 350px;
-  height: 350px;
+  height: 200px;
   margin: 0 auto;
-  text-align: center;
+  text-align: left;
 }
 .search-area {
   margin: 25px 0 0 0;
-  border-color: #555;
+  text-align:left;
+  border:none;
 }
 .search-area .search-logo {
-  margin-bottom: 65px;
+  margin-bottom: 10px;
 }
 .search-area .search-form {
   background: #333333;
@@ -78,3 +79,5 @@ h4 {
 .mastfoot {
   background: #333333;
 }
+.peers-table { padding:10px; background-color:#666; width:100%; color:black;  }
+.peers-table td { padding:3px 5px; }

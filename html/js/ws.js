@@ -16,8 +16,13 @@ function Connection(onMessage) {
   }
 
   websocket.onmessage = function(evt) {
-   var data = JSON.parse(evt.data)
-   console.log("message", data.result)
+   	var data = JSON.parse(evt.data)
+
+   	if(data.error !== "undefined")
+	   console.log("Debug: ", data);
+	else
+	   console.log("Message: ", data.result)
+	   
    onMessage(data.result)
   }
   this.websocket = websocket;

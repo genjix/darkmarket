@@ -1,5 +1,7 @@
-# Change this to your store's filename
+# Store config file
 STOREFILE=ppl/caedes
+
+# Location of log directory
 LOGDIR=logs
 
 if which python2 2>/dev/null; then

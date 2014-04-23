@@ -63,10 +63,12 @@
 
 
 <div id="search" class="search-area" ng-show="started">
-  <a href="../../">
-    <img class="search-logo" src="/html/img/logo.png" alt="DarkMarket" />
+  <div style="float:left;">
+  <a href="">
+    <img class="search-logo" src="/html/img/logo.png" width=250 height=75 alt="DarkMarket" />
   </a>
-  <div class="search-area panel panel-default">
+  </div>
+  <div class="search-area panel panel-default" style="text-align:right;margin-left:275px">
    <form class="search-form form-inline panel-body">
     <label class="sr-only" for="search">Search:</label>
     <input class="form-control" size="60" ng-model="search" type="text" placeholder="Search for nicknames.."></input>
@@ -75,15 +77,33 @@
   </div>
 <div class="row">
   <div class="col-sm-8">
-    <h3>Peers</h3>
+    <h3>Markets</h3>
     <div class="peers-area" ng-repeat="peer in peers">
-            <identicon icon-size="38" hash="peer.pubkey" title="{{peer.pubkey}}"></identicon><span title="{{peer.pubkey}}">{{peer.uri}} {{peer.nickname ? peer.nickname : peer.pubkey?peer.pubkey.slice(0,16):'unknown'}}... </span><button ng-click="queryShop(peer)" class="btn btn-sm btn-primary">Find Shop</button></div>
+           <table class="peers-table">
+           	<tr>
+           		<td width="40"><identicon icon-size="38" hash="peer.pubkey" title="{{peer.pubkey}}"></identicon></td>
+           		<td>
+           			<span title="{{peer.pubkey}}">URI: {{peer.uri}} <BR> <span style="font-style:italic;">PubKey: {{peer.nickname ? peer.nickname : peer.pubkey?peer.pubkey.slice(0,56):'unknown'}}...</span></span>            		
+            	</td>
+            	<td align=right><button ng-click="queryShop(peer)" class="btn btn-sm btn-primary">Visit Shop</button>
+            </tr>
+            </table>
+    </div>
   </div>
   <div class="anon-profile-area col-sm-4">
-    <h3>Myself</h3>
-    <identicon icon-size="64" hash="myself.pubkey" title="{{myself.pubkey}}"></identicon>
-    <div title="{{myself.pubkey}}">{{myself.pubkey.slice(0,16)}}... {{myself.uri}}</div>
+    <h3>My Store</h3>
+    <table>
+    	<tr>
+    		<td width=64><identicon icon-size="64" hash="myself.pubkey" title="{{myself.pubkey}}"></identicon></td>
+    		<td valign=top>
+    			Reputation: TBD<BR>
+    			<div title="{{myself.pubkey}}">PubKey: {{myself.pubkey.slice(0,16)}}... {{myself.uri}}</div>    
+    		</td>
+    	</tr>
+    </table>
+    
     <div class="reviews-area">
+    
       <h4>Reviews</h4>
       <div ng-repeat="review in myself.reputation">[{{review.rating}}] {{review.text}}</div>
     </div>

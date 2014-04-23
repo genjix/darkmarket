@@ -45,8 +45,8 @@ class Market(object):
         nickname = str(msg["text"])
         key = self.query_ident.lookup(nickname)
         if key is None:
-            print "Key not found!"
-            return ("Not found!", None)
+            print "Key not found for this nickname"
+            return ("Key not found for this nickname", None)
         print "Found key:", key.encode("hex")
         if self._transport.nick_mapping.has_key(nickname):
             print "Already have a cached mapping, just adding key there."
