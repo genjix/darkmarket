@@ -4,9 +4,13 @@ else
     PYTHON=python
 fi
 
-$PYTHON node/tornadoloop.py 127.0.0.1 > node0.log &
+# Change this to your store's filename
+STOREFILE=ppl/caedes
+
+
+$PYTHON node/tornadoloop.py $STOREFILE 127.0.0.1 > node0.log &
 sleep 1
-$PYTHON node/tornadoloop.py 127.0.0.2 tcp://127.0.0.1:12345 > node1.log &
+$PYTHON node/tornadoloop.py $STOREFILE 127.0.0.2 tcp://127.0.0.1:12345 > node1.log &
 
 # Open the browser if -q is not passed:
 if ! [ $1 = -q ]; then
