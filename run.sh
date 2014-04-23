@@ -1,16 +1,26 @@
+# Change this to your store's filename
+STOREFILE=ppl/caedes
+LOGDIR=logs
+
 if which python2 2>/dev/null; then
     PYTHON=python2
 else
     PYTHON=python
 fi
 
-# Change this to your store's filename
-STOREFILE=ppl/caedes
 
+if [ ! -d "$LOGDIR" ]; then
+  mkdir $LOGDIR
+fi
+touch $LOGDIR/server.log
 
-$PYTHON node/tornadoloop.py $STOREFILE 127.0.0.1 > node0.log &
+# Primary Market
+$PYTHON node/tornadoloop.py $STOREFILE 127.0.0.1 > $LOGDIR/server.log &
+
+# Demo Peer Market
 sleep 1
-$PYTHON node/tornadoloop.py $STOREFILE 127.0.0.2 tcp://127.0.0.1:12345 > node1.log &
+touch $LOGDIR/demo_peer.log
+$PYTHON node/tornadoloop.py $STOREFILE 127.0.0.2 tcp://127.0.0.1:12345 > $LOGDIR//demo_peer.log &
 
 # Open the browser if -q is not passed:
 if ! [ $1 = -q ]; then
