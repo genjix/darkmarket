@@ -15,8 +15,9 @@ h3.masthead-brand {
   border: none;
 }
 h4 {
-  margin-top: 0px;
-  color: #ccff00;
+  margin-top: 10px;
+  color: #efefef;
+  font-weight:80;
 }
 .masthead {
   position: fixed;
@@ -25,19 +26,22 @@ h4 {
 }
 .masthead .masthead-brand img {
   width: 250px;
+  
+  
 }
 #mascot {
   width: 350px;
-  height: 350px;
+  height: 200px;
   margin: 0 auto;
-  text-align: center;
+  text-align: left;
 }
 .search-area {
   margin: 25px 0 0 0;
-  border-color: #555;
+  text-align:left;
+  border:none;
 }
 .search-area .search-logo {
-  margin-bottom: 65px;
+  margin-bottom: 10px;
 }
 .search-area .search-form {
   background: #333333;
@@ -53,7 +57,7 @@ h4 {
   text-align: left;
 }
 .reviews-area {
-  margin-top: 20px;
+
   padding: 10px;
   text-align: left;
   border: 1px solid #555;
@@ -67,7 +71,7 @@ h4 {
   text-align: left;
 }
 .shoutbox-area .shout-input {
-  width: 100%;
+  width: 80%;
 }
 .shoutbox-area .shout-chats {
   padding: 10px;
@@ -78,3 +82,19 @@ h4 {
 .mastfoot {
   background: #333333;
 }
+.peers-table { padding:10px; background-color:#666; width:100%; color:black;  }
+.peers-table td { padding:3px 5px; }
+
+ .animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.stars
+{
+    margin: 20px 0;
+    font-size: 24px;
+    color: #d17581;
+}
+

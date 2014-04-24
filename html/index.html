@@ -10,10 +10,15 @@
 <link href="/html/css/bootstrap.min.css" rel="stylesheet">
 <link href="/html/css/dark.css" rel="stylesheet">
 <link href="/html/less/css/app.css" rel="stylesheet">
+
+
+
 </head>
+
 <body ng-controller="Market">
-<div ng-show="warningMessage" class="alert alert-warning"></div>
-<div class="container">
+	
+	<div ng-show="warningMessage" class="alert alert-warning"></div>
+	<div class="container">
 
 
 
@@ -26,9 +31,7 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-              <h3 class="masthead-brand">
-                <img src="/html/img/logo.png" alt="DarkMarket" />
-              </h3>
+              <h3 class="masthead-brand">OpenBazaar</h3>
               <ul class="nav masthead-nav">
                 <li class="active"><a href="#">Home</a></li>
                 <li><a ng-click="started=true">Search</a></li>
@@ -38,7 +41,7 @@
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading">The Dark Side of the Market</h1>
+            <h1 class="cover-heading"></h1>
             <img class="img-responsive" src="/html/img/dsotm-link.png" alt="DarkMarket Mascot" id="mascot" />
 
             <p class="lead">Here you can share your creations as freely as you can share an idea.</p>
@@ -49,8 +52,7 @@
 
           <div class="mastfoot">
             <div class="inner">
-              <p>DarkMarket is a safe untouchable marketplace for the planet Earth.</p>
-              <p>Distributed free from tyranny and protected by the GPL.</p>
+              <p>OpenBazaar</p>
             </div>
           </div>
 
@@ -63,10 +65,10 @@
 
 
 <div id="search" class="search-area" ng-show="started">
-  <a href="../../">
-    <img class="search-logo" src="/html/img/logo.png" alt="DarkMarket" />
-  </a>
-  <div class="search-area panel panel-default">
+  <div style="float:left;">
+    <h1>OpenBazaar</h1>
+  </div>
+  <div class="search-area panel panel-default" style="text-align:right;margin-left:275px">
    <form class="search-form form-inline panel-body">
     <label class="sr-only" for="search">Search:</label>
     <input class="form-control" size="60" ng-model="search" type="text" placeholder="Search for nicknames.."></input>
@@ -75,15 +77,33 @@
   </div>
 <div class="row">
   <div class="col-sm-8">
-    <h3>Peers</h3>
+    <h3>Markets</h3>
     <div class="peers-area" ng-repeat="peer in peers">
-            <identicon icon-size="38" hash="peer.pubkey" title="{{peer.pubkey}}"></identicon><span title="{{peer.pubkey}}">{{peer.uri}} {{peer.nickname ? peer.nickname : peer.pubkey?peer.pubkey.slice(0,16):'unknown'}}... </span><button ng-click="queryShop(peer)" class="btn btn-sm btn-primary">Find Shop</button></div>
+           <table class="peers-table">
+           	<tr>
+           		<td width="40"><identicon icon-size="38" hash="peer.pubkey" title="{{peer.pubkey}}"></identicon></td>
+           		<td>
+           			<span title="{{peer.pubkey}}">URI: {{peer.uri}} <BR> <span style="font-style:italic;">PubKey: {{peer.nickname ? peer.nickname : peer.pubkey?peer.pubkey.slice(0,56):'unknown'}}...</span></span>            		
+            	</td>
+            	<td align=right><button ng-click="queryShop(peer)" class="btn btn-sm btn-primary">Visit Shop</button>
+            </tr>
+            </table>
+    </div>
   </div>
   <div class="anon-profile-area col-sm-4">
-    <h3>Myself</h3>
-    <identicon icon-size="64" hash="myself.pubkey" title="{{myself.pubkey}}"></identicon>
-    <div title="{{myself.pubkey}}">{{myself.pubkey.slice(0,16)}}... {{myself.uri}}</div>
+    <h3>My Store</h3>
+    <table>
+    	<tr>
+    		<td width=64><identicon icon-size="64" hash="myself.pubkey" title="{{myself.pubkey}}"></identicon></td>
+    		<td valign=top>
+    			Reputation: TBD<BR>
+    			<div title="{{myself.pubkey}}">PubKey: {{myself.pubkey.slice(0,16)}}... {{myself.uri}}</div>    
+    		</td>
+    	</tr>
+    </table>
+    
     <div class="reviews-area">
+    
       <h4>Reviews</h4>
       <div ng-repeat="review in myself.reputation">[{{review.rating}}] {{review.text}}</div>
     </div>
@@ -92,15 +112,10 @@
 <div class="row">
   <div class="col-sm-8">
     <div ng-show="page" class="panel panel-default">
-      <div class="panel-heading">
-    <identicon icon-size="64" hash="page.pubkey" title="{{page.pubkey}}"></identicon>Shop
-      <button ng-click="showReviewForm=true" ng-show="!showReviewForm" class="btn btn-default navbar-btn">Review</button>
-      <form ng-show="showReviewForm">
-        Text: <input class="form-control" type="text" ng-model="review.text" placeholder="Write a review"></input>
-        Rating: <input class="form-control" type="number" ng-model="review.rating" placeholder="Rating"></input>
-        <a class="btn btn-primary navbar-btn" ng-click="addReview()" type="submit">Submit</a>
-        <a class="btn btn-warning navbar-btn" ng-click="showReviewForm=false" type="cancel">Cancel</a>
-      </form>
+      
+    <identicon icon-size="64" hash="page.pubkey" title="{{page.pubkey}}"></identicon> 
+      
+      
       <!-- Buy -->
       <button ng-click="creatingOrder=true" class="btn btn-success btn-xl navbar-btn">Buy Now</button>
       <form ng-show="creatingOrder">
@@ -110,8 +125,8 @@
        </form>
 
 
-      </div>
-    </div>
+     
+   
     <h3 ng-show="Object.keys(orders).length">Orders</h3>
     <!-- Orders -->
     <div class='panel-body' ng-repeat="(orderId, order) in orders" ng-show="order.seller == page.pubkey || order.seller == myself.pubkey">
@@ -138,22 +153,60 @@
 
       <div class="panel-body" ng-show="page">
         <div id="page-content"></div>
+        
+        
+        <!-- TODO: Pagination of comments -->
         <h3>Reviews</h3>
-        <div ng-repeat="review in currentReviews">{{review.rating}} {{review.text}} {{review.pubkey.slice(0,16)}}...</div>
-
-        <div title="page.pubkey"><h2>Owner:</h2> {{page.pubkey.slice(0,32)}}...</div>
-        <div title="{{page.signature}}"><h2>Signature</h2> {{page.signature.slice(0,32)}}...</div>
+        <div ng-repeat="review in currentReviews.slice().reverse()" style="padding:3px;background-color:#333;margin-bottom:5px;">
+        	<table><tr><td><identicon icon-size="50" hash="review.pubkey" title="{{review.pubkey}}"></identicon></td><td>
+        		<div style="word-wrap:break-word;width:600px;font-size:14px;"><span style="color:#999;"><em>{{review.pubkey}}</em></span></div>
+        	</td></tr></table>
+        	<div>
+        		<table><tr><td width=60 valign=top style="font-size:200%">{{review.rating}}</td><td>"{{review.text}}"</td></tr></table></div>
+        </div>
+		<button ng-click="showReviewForm=true" ng-show="!showReviewForm" class="btn btn-default navbar-btn">Add Review</button>
+		<form ng-show="showReviewForm">
+		
+			<div style="margin:20px 10px">
+			<h4>Add a Review</h4> 
+				<select class="form-control" type="number" ng-model="review.rating" placeholder="Rating" style="width:10%;">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</select>
+				<div style="margin-top:5px">
+				<textarea class="form-control" ng-model="review.text" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+				</div>
+				<a class="btn btn-default navbar-btn" ng-click="addReview()" type="submit">Submit</a>
+				<a class="btn btn-default navbar-btn" ng-click="showReviewForm=false" type="cancel">Cancel</a>
+			</div>
+			
+		  </form>
+		  
+		
+		
+        <div title="page.pubkey" style="word-wrap:break-word"><h2>Owner:</h2> {{page.pubkey}}</div>
+        <div title="{{page.signature}}" style="word-wrap:break-word"><h2>Signature</h2> {{page.signature}}</div>
       </div>
+       </div>
+      
   </div>
   <div class="shoutbox-area col-sm-4">
     <div>
       <h3>Shout</h3>
       <form class="form-inline">
         <input class="shout-input form-control" type="text" ng-model="newShout" placeholder="Say something anonymously"></input>
-        <button ng-click="createShout(newShout)" class="btn btn-danger btn-block">Shout!</button>
+        <button ng-click="createShout(newShout)" class="btn btn-danger">Shout!</button>
       </form>
       <div class="shout-chats">
-        <div ng-repeat="shout in shouts">{{shout.text}}</div>
+        <div ng-repeat="shout in shouts.slice().reverse()">{{shout.text}}</div>
       </div>
     </div>
   </div>
@@ -161,5 +214,7 @@
 </div>
 
 </div> <!-- container -->
+
+
 </body>
 </html>

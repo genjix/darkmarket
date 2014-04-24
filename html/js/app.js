@@ -26,6 +26,10 @@ angular.module('app').directive('identicon', function () {
     }
   });
 
+
+/*
+Market Controller
+*/
 angular.module('app').controller('Market', ['$scope', function($scope) {
 
   $scope.page = false
@@ -34,8 +38,10 @@ angular.module('app').controller('Market', ['$scope', function($scope) {
   $scope.searching = ""
   $scope.currentReviews = []
   $scope.myReviews = []
-  $scope.createShout = function() {
-     // launch a shout
+  
+  
+  $scope.createShout = function() {   
+     // Broadcast shout to the network
      var newShout = {'type': 'shout', 'text': $scope.newShout}
      socket.send('shout', newShout)
      $scope.shouts.push(newShout)
@@ -54,32 +60,35 @@ angular.module('app').controller('Market', ['$scope', function($scope) {
 
  // Open the websocket connection and handle messages
   var socket = new Connection(function(msg) {
-   switch(msg.type) {
-      case 'peer':
-         $scope.parse_peer(msg)
-         break;
-      case 'page':
-         $scope.parse_page(msg)
-         break;
-      case 'myself':
-         $scope.parse_myself(msg)
-         break;
-      case 'shout':
-         $scope.parse_shout(msg)
-         break;
-      case 'order':
-         $scope.parse_order(msg)
-         break;
-      case 'reputation':
-         $scope.parse_reputation(msg)
-         break;
-      case 'response_pubkey':
-         $scope.parse_response_pubkey(msg)
-         break;
-      default:
-         console.log("unhandled message!",msg)
-         break;
-    }
+  
+   if(msg.type !== "undefined") {
+	   switch(msg.type) {
+		  case 'peer':
+			 $scope.parse_peer(msg)
+			 break;
+		  case 'page':
+			 $scope.parse_page(msg)
+			 break;
+		  case 'myself':
+			 $scope.parse_myself(msg)
+			 break;
+		  case 'shout':
+			 $scope.parse_shout(msg)
+			 break;
+		  case 'order':
+			 $scope.parse_order(msg)
+			 break;
+		  case 'reputation':
+			 $scope.parse_reputation(msg)
+			 break;
+		  case 'response_pubkey':
+			 $scope.parse_response_pubkey(msg)
+			 break;
+		  default:
+			 console.log("unhandled message!",msg)
+			 break;
+		}
+	}
   })
 
   var add_review = function(pubkey, review) {
@@ -101,6 +110,74 @@ angular.module('app').controller('Market', ['$scope', function($scope) {
     }
   }
 
+  $scope.review = {rating:5, text:""}
+  $scope.addReview = function() {
+     var query = {
+     	'type': 'review', 
+     	'pubkey': $scope.page.pubkey, 
+     	'text': $scope.review.text, 
+     	'rating': parseInt($scope.review.rating)
+     }
+     socket.send('review', query)
+
+     // store in appropriate format (its different than push format :P)
+     add_review($scope.page.pubkey, {
+     	type: 'review', 
+     	'pubkey': $scope.myself.pubkey, 
+     	'subject': $scope.page.pubkey, 
+     	'rating': query.rating, text: query.text
+     })
+
+     $scope.review.rating = 5;
+     $scope.review.text = '';
+     $scope.showReviewForm = false;
+  }
+  
+  
+  // Search for a peer on the network
+  $scope.search = "";
+  $scope.searchNickname = function() {
+     var query = {
+     	'type': 'search', 
+     	'text': $scope.search 
+     };
+     $scope.searching = $scope.search;
+     socket.send('search', query);
+     $scope.search = "";
+  }
+
+  $scope.newOrder = {text:'', tx: ''}
+  $scope.orders = {}
+  $scope.createOrder = function() {
+      $scope.creatingOrder = false;
+      var newOrder = {
+          'text': $scope.newOrder.text,
+          'state': 'new',
+          'buyer': $scope.myself.pubkey,
+          'seller': $scope.page.pubkey
+      }
+      $scope.newOrder.text = '';
+     //  $scope.orders.push(newOrder) no id...
+      socket.send('order', newOrder);
+  }
+  $scope.payOrder = function(order) {
+      order.state = 'payed'
+      order.tx = $scope.newOrder.tx;
+      $scope.newOrder.tx = '';
+      socket.send('order', order);
+  }
+  $scope.receiveOrder = function(order) {
+      order.state = 'received'
+      socket.send('order', order);
+  }
+  $scope.sendOrder = function(order) {
+      order.state = 'sent'
+      socket.send('order', order);
+  }
+
+/*
+Parsing functions
+*/
   $scope.parse_order = function(msg) {
       if ($scope.orders.hasOwnProperty(msg.id)) {
           console.log("updating order!")
@@ -166,18 +243,7 @@ angular.module('app').controller('Market', ['$scope', function($scope) {
        $scope.$apply();
     }
   }
-  $scope.review= {rating:5, text:""}
-  $scope.addReview = function() {
-     var query = {'type': 'review', 'pubkey': $scope.page.pubkey, 'text': $scope.review.text, 'rating': parseInt($scope.review.rating)}
-     socket.send('review', query)
-
-     // store in appropriate format (its different than push format :P)
-     add_review($scope.page.pubkey, {type: 'review', 'pubkey': $scope.myself.pubkey, 'subject': $scope.page.pubkey, 'rating': query.rating, text: query.text})
-
-     $scope.review.rating = 5;
-     $scope.review.text = '';
-     $scope.showReviewForm = false;
-  }
+  
   // My information has arrived
   $scope.parse_myself = function(msg) {
     $scope.myself = msg;
@@ -198,41 +264,8 @@ angular.module('app').controller('Market', ['$scope', function($scope) {
        $scope.$apply();
     }
   }
-  $scope.search = ""
-  $scope.searchNickname = function() {
-     var query = {'type': 'search', 'text': $scope.search };
-     $scope.searching = $scope.search;
-     socket.send('search', query)
-     $scope.search = ""
-  }
-
-  $scope.newOrder = {text:'', tx: ''}
-  $scope.orders = {}
-  $scope.createOrder = function() {
-      $scope.creatingOrder = false;
-      var newOrder = {
-          'text': $scope.newOrder.text,
-          'state': 'new',
-          'buyer': $scope.myself.pubkey,
-          'seller': $scope.page.pubkey
-      }
-      $scope.newOrder.text = '';
-     //  $scope.orders.push(newOrder) no id...
-      socket.send('order', newOrder);
-  }
-  $scope.payOrder = function(order) {
-      order.state = 'payed'
-      order.tx = $scope.newOrder.tx;
-      $scope.newOrder.tx = '';
-      socket.send('order', order);
-  }
-  $scope.receiveOrder = function(order) {
-      order.state = 'received'
-      socket.send('order', order);
-  }
-  $scope.sendOrder = function(order) {
-      order.state = 'sent'
-      socket.send('order', order);
-  }
+  
+  
+ 
 
 }])
