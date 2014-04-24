@@ -26,9 +26,7 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-              <h3 class="masthead-brand">
-                <img src="/html/img/logo.png" alt="DarkMarket" />
-              </h3>
+              <h3 class="masthead-brand">OpenBazaar</h3>
               <ul class="nav masthead-nav">
                 <li class="active"><a href="#">Home</a></li>
                 <li><a ng-click="started=true">Search</a></li>
@@ -38,7 +36,7 @@
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading">The Dark Side of the Market</h1>
+            <h1 class="cover-heading"></h1>
             <img class="img-responsive" src="/html/img/dsotm-link.png" alt="DarkMarket Mascot" id="mascot" />
 
             <p class="lead">Here you can share your creations as freely as you can share an idea.</p>
@@ -49,8 +47,7 @@
 
           <div class="mastfoot">
             <div class="inner">
-              <p>DarkMarket is a safe untouchable marketplace for the planet Earth.</p>
-              <p>Distributed free from tyranny and protected by the GPL.</p>
+              <p>OpenBazaar</p>
             </div>
           </div>
 
@@ -64,9 +61,7 @@
 
 <div id="search" class="search-area" ng-show="started">
   <div style="float:left;">
-  <a href="">
-    <img class="search-logo" src="/html/img/logo.png" width=250 height=75 alt="DarkMarket" />
-  </a>
+    <h1>OpenBazaar</h1>
   </div>
   <div class="search-area panel panel-default" style="text-align:right;margin-left:275px">
    <form class="search-form form-inline panel-body">
@@ -114,7 +109,7 @@
     <div ng-show="page" class="panel panel-default">
       <div class="panel-heading">
     <identicon icon-size="64" hash="page.pubkey" title="{{page.pubkey}}"></identicon>Shop
-      <button ng-click="showReviewForm=true" ng-show="!showReviewForm" class="btn btn-default navbar-btn">Review</button>
+      
       <form ng-show="showReviewForm">
         Text: <input class="form-control" type="text" ng-model="review.text" placeholder="Write a review"></input>
         Rating: <input class="form-control" type="number" ng-model="review.rating" placeholder="Rating"></input>
@@ -159,10 +154,13 @@
       <div class="panel-body" ng-show="page">
         <div id="page-content"></div>
         <h3>Reviews</h3>
-        <div ng-repeat="review in currentReviews">{{review.rating}} {{review.text}} {{review.pubkey.slice(0,16)}}...</div>
-
-        <div title="page.pubkey"><h2>Owner:</h2> {{page.pubkey.slice(0,32)}}...</div>
-        <div title="{{page.signature}}"><h2>Signature</h2> {{page.signature.slice(0,32)}}...</div>
+        <div ng-repeat="review in currentReviews.slice().reverse()" style="padding:3px;background-color:#333;margin-bottom:5px;">
+        	<div><span style="color:#999;"><em>{{review.pubkey.slice(0,32)}}...</em></span></div>
+        	<div>{{review.rating}} - "{{review.text}}"</div>
+        </div>
+		<button ng-click="showReviewForm=true" ng-show="!showReviewForm" class="btn btn-default navbar-btn">Add Review</button>
+        <div title="page.pubkey" style="word-wrap:break-word"><h2>Owner:</h2> {{page.pubkey}}</div>
+        <div title="{{page.signature}}" style="word-wrap:break-word"><h2>Signature</h2> {{page.signature}}</div>
       </div>
   </div>
   <div class="shoutbox-area col-sm-4">

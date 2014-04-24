@@ -25,6 +25,7 @@ def load_crypto_details():
 
 NICKNAME, SECRET, PUBKEY = load_crypto_details()
 
+
 class CryptoPeerConnection(PeerConnection):
     def __init__(self, address, transport, pub):
         self._transport = transport
@@ -42,12 +43,10 @@ class CryptoPeerConnection(PeerConnection):
         # this are just acks
         pass
 
-
 class CryptoTransportLayer(TransportLayer):
     def __init__(self, port=None):
         TransportLayer.__init__(self, port)
         self._myself = ec.ECC(curve='secp256k1')
-
         self.nick_mapping = {}
 
     def get_profile(self):
