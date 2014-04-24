@@ -170,10 +170,10 @@
       <h3>Shout</h3>
       <form class="form-inline">
         <input class="shout-input form-control" type="text" ng-model="newShout" placeholder="Say something anonymously"></input>
-        <button ng-click="createShout(newShout)" class="btn btn-danger btn-block">Shout!</button>
+        <button ng-click="createShout(newShout)" class="btn btn-danger">Shout!</button>
       </form>
       <div class="shout-chats">
-        <div ng-repeat="shout in shouts">{{shout.text}}</div>
+        <div ng-repeat="shout in shouts.slice().reverse()">{{shout.text}}</div>
       </div>
     </div>
   </div>
