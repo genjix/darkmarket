@@ -1,7 +1,7 @@
 #DarkMarket
 =======
 
-DarkMarket is a safe untouchable marketplace for the planet Earth. Distributed free from tyranny and protected by the GPL.
+DarkMarket is a decentralized marketplace proof of concept. It is protected by the GPL.
 
 `pip install pyzmq`
 `pip install tornado`
