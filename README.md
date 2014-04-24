@@ -8,8 +8,8 @@ DarkMarket is a safe untouchable marketplace for the planet Earth. Distributed f
 `pip install pyelliptic`
 
 INSTALL python-obelisk
-1) git clone https://github.com/darkwallet/python-obelisk
-2) python setup.py install
+1. git clone https://github.com/darkwallet/python-obelisk
+2. python setup.py install
 
 
 ## OSX Users
