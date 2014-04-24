@@ -1,2 +1,6 @@
   # pip install pyelliptic
 
+Dependencies:
+
+Obelisk
+python-tornado
