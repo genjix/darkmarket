@@ -112,8 +112,8 @@
 <div class="row">
   <div class="col-sm-8">
     <div ng-show="page" class="panel panel-default">
-      <div class="panel-heading">
-    <identicon icon-size="64" hash="page.pubkey" title="{{page.pubkey}}"></identicon>Shop
+      
+    <identicon icon-size="64" hash="page.pubkey" title="{{page.pubkey}}"></identicon> 
       
       
       <!-- Buy -->
@@ -125,8 +125,8 @@
        </form>
 
 
-      </div>
-    </div>
+     
+   
     <h3 ng-show="Object.keys(orders).length">Orders</h3>
     <!-- Orders -->
     <div class='panel-body' ng-repeat="(orderId, order) in orders" ng-show="order.seller == page.pubkey || order.seller == myself.pubkey">
@@ -193,6 +193,8 @@
         <div title="page.pubkey" style="word-wrap:break-word"><h2>Owner:</h2> {{page.pubkey}}</div>
         <div title="{{page.signature}}" style="word-wrap:break-word"><h2>Signature</h2> {{page.signature}}</div>
       </div>
+       </div>
+      
   </div>
   <div class="shoutbox-area col-sm-4">
     <div>

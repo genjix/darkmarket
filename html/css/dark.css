@@ -163,3 +163,6 @@ body {
     width: 700px;
   }
 }
+
+.panel-default{border-color:#696969}
+.panel { background-color:#696969;}
