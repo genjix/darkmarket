@@ -15,8 +15,9 @@ h3.masthead-brand {
   border: none;
 }
 h4 {
-  margin-top: 0px;
-  color: #ccff00;
+  margin-top: 10px;
+  color: #efefef;
+  font-weight:80;
 }
 .masthead {
   position: fixed;
@@ -25,6 +26,8 @@ h4 {
 }
 .masthead .masthead-brand img {
   width: 250px;
+  
+  
 }
 #mascot {
   width: 350px;
@@ -81,3 +84,17 @@ h4 {
 }
 .peers-table { padding:10px; background-color:#666; width:100%; color:black;  }
 .peers-table td { padding:3px 5px; }
+
+ .animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.stars
+{
+    margin: 20px 0;
+    font-size: 24px;
+    color: #d17581;
+}
+

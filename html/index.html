@@ -10,10 +10,15 @@
 <link href="/html/css/bootstrap.min.css" rel="stylesheet">
 <link href="/html/css/dark.css" rel="stylesheet">
 <link href="/html/less/css/app.css" rel="stylesheet">
+
+
+
 </head>
+
 <body ng-controller="Market">
-<div ng-show="warningMessage" class="alert alert-warning"></div>
-<div class="container">
+	
+	<div ng-show="warningMessage" class="alert alert-warning"></div>
+	<div class="container">
 
 
 
@@ -110,12 +115,7 @@
       <div class="panel-heading">
     <identicon icon-size="64" hash="page.pubkey" title="{{page.pubkey}}"></identicon>Shop
       
-      <form ng-show="showReviewForm">
-        Text: <input class="form-control" type="text" ng-model="review.text" placeholder="Write a review"></input>
-        Rating: <input class="form-control" type="number" ng-model="review.rating" placeholder="Rating"></input>
-        <a class="btn btn-primary navbar-btn" ng-click="addReview()" type="submit">Submit</a>
-        <a class="btn btn-warning navbar-btn" ng-click="showReviewForm=false" type="cancel">Cancel</a>
-      </form>
+      
       <!-- Buy -->
       <button ng-click="creatingOrder=true" class="btn btn-success btn-xl navbar-btn">Buy Now</button>
       <form ng-show="creatingOrder">
@@ -153,12 +153,43 @@
 
       <div class="panel-body" ng-show="page">
         <div id="page-content"></div>
+        
+        
+        <!-- TODO: Pagination of comments -->
         <h3>Reviews</h3>
         <div ng-repeat="review in currentReviews.slice().reverse()" style="padding:3px;background-color:#333;margin-bottom:5px;">
-        	<div><span style="color:#999;"><em>{{review.pubkey.slice(0,32)}}...</em></span></div>
-        	<div>{{review.rating}} - "{{review.text}}"</div>
+        	<div style="word-wrap:break-word"><span style="color:#999;"><em>{{review.pubkey}}</em></span></div>
+        	<div>
+        		<table><tr><td width=60 valign=top style="font-size:200%">{{review.rating}}</td><td>"{{review.text}}"</td></tr></table></div>
         </div>
 		<button ng-click="showReviewForm=true" ng-show="!showReviewForm" class="btn btn-default navbar-btn">Add Review</button>
+		<form ng-show="showReviewForm">
+		
+			<div style="margin:20px 10px">
+			<h4>Add a Review</h4> 
+				<select class="form-control" type="number" ng-model="review.rating" placeholder="Rating" style="width:10%;">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</select>
+				<div style="margin-top:5px">
+				<textarea class="form-control" ng-model="review.text" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+				</div>
+				<a class="btn btn-default navbar-btn" ng-click="addReview()" type="submit">Submit</a>
+				<a class="btn btn-default navbar-btn" ng-click="showReviewForm=false" type="cancel">Cancel</a>
+			</div>
+			
+		  </form>
+		  
+		
+		
         <div title="page.pubkey" style="word-wrap:break-word"><h2>Owner:</h2> {{page.pubkey}}</div>
         <div title="{{page.signature}}" style="word-wrap:break-word"><h2>Signature</h2> {{page.signature}}</div>
       </div>
@@ -179,5 +210,7 @@
 </div>
 
 </div> <!-- container -->
+
+
 </body>
 </html>
