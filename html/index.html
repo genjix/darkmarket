@@ -158,7 +158,9 @@
         <!-- TODO: Pagination of comments -->
         <h3>Reviews</h3>
         <div ng-repeat="review in currentReviews.slice().reverse()" style="padding:3px;background-color:#333;margin-bottom:5px;">
-        	<div style="word-wrap:break-word"><span style="color:#999;"><em>{{review.pubkey}}</em></span></div>
+        	<table><tr><td><identicon icon-size="50" hash="review.pubkey" title="{{review.pubkey}}"></identicon></td><td>
+        		<div style="word-wrap:break-word;width:600px;font-size:14px;"><span style="color:#999;"><em>{{review.pubkey}}</em></span></div>
+        	</td></tr></table>
         	<div>
         		<table><tr><td width=60 valign=top style="font-size:200%">{{review.rating}}</td><td>"{{review.text}}"</td></tr></table></div>
         </div>
