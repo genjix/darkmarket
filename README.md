@@ -1,5 +1,4 @@
 #DarkMarket
-=======
 
 DarkMarket is a decentralized marketplace proof of concept. It is protected by the GPL.
 
