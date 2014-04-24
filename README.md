@@ -1,15 +1,14 @@
-#DarkMarket
-=======
+#OpenBazaar
 
-DarkMarket is a safe untouchable marketplace for the planet Earth. Distributed free from tyranny and protected by the GPL.
+OpenBazaar is a decentralized marketplace proof of concept. It is based off of the POC code by the darkmarket team and protected by the GPL.
 
 `pip install pyzmq`
 `pip install tornado`
 `pip install pyelliptic`
 
-INSTALL python-obelisk
-1) git clone https://github.com/darkwallet/python-obelisk
-2) python setup.py install
+1. Install python-obelisk
+2. git clone https://github.com/darkwallet/python-obelisk
+3. python setup.py install
 
 
 ## OSX Users
