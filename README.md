@@ -1,6 +1,6 @@
-#DarkMarket
+#OpenBazaar
 
-DarkMarket is a decentralized marketplace proof of concept. It is protected by the GPL.
+OpenBazaar is a decentralized marketplace proof of concept. It is based off of the POC code by the darkmarket team and protected by the GPL.
 
 `pip install pyzmq`
 `pip install tornado`
