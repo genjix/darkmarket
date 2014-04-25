@@ -1,4 +1,4 @@
 This repo has been moved to:
 
-  https://github.com/darkwallet/darkwallet
+  https://github.com/darkwallet/darkmarket
 
